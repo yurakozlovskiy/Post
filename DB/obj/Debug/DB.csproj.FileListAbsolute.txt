@@ -1,0 +1,12 @@
+C:\Users\Admin\source\repos\Post\DB\bin\Debug\DB.dll.config
+C:\Users\Admin\source\repos\Post\DB\bin\Debug\DB.dll
+C:\Users\Admin\source\repos\Post\DB\bin\Debug\DB.pdb
+C:\Users\Admin\source\repos\Post\DB\bin\Debug\EntityFramework.dll
+C:\Users\Admin\source\repos\Post\DB\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Admin\source\repos\Post\DB\bin\Debug\EntityFramework.xml
+C:\Users\Admin\source\repos\Post\DB\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Admin\source\repos\Post\DB\obj\Debug\DB.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\Post\DB\obj\Debug\DB.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\Post\DB\obj\Debug\DB.csproj.CopyComplete
+C:\Users\Admin\source\repos\Post\DB\obj\Debug\DB.dll
+C:\Users\Admin\source\repos\Post\DB\obj\Debug\DB.pdb

@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PostModelStoreContainer" CdmEntityContainer="PostEntities">
+    <EntitySetMapping Name="Addresses">
+      <EntityTypeMapping TypeName="PostModel.Addresses">
+        <MappingFragment StoreEntitySet="Addresses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Oblast" ColumnName="Oblast" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="House" ColumnName="House" />
+          <ScalarProperty Name="Flat" ColumnName="Flat" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cars">
+      <EntityTypeMapping TypeName="PostModel.Cars">
+        <MappingFragment StoreEntitySet="Cars">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="PostModel.Customers">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryStatus">
+      <EntityTypeMapping TypeName="PostModel.DeliveryStatus">
+        <MappingFragment StoreEntitySet="DeliveryStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drivers">
+      <EntityTypeMapping TypeName="PostModel.Drivers">
+        <MappingFragment StoreEntitySet="Drivers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="PostModel.Employees">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="DateWork" ColumnName="DateWork" />
+          <ScalarProperty Name="isFired" ColumnName="isFired" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parcels">
+      <EntityTypeMapping TypeName="PostModel.Parcels">
+        <MappingFragment StoreEntitySet="Parcels">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SentFromPostOfficeId" ColumnName="SentFromPostOfficeId" />
+          <ScalarProperty Name="SentToPostOfficeId" ColumnName="SentToPostOfficeId" />
+          <ScalarProperty Name="SentFromPersonId" ColumnName="SentFromPersonId" />
+          <ScalarProperty Name="SentToPersonId" ColumnName="SentToPersonId" />
+          <ScalarProperty Name="DriverId" ColumnName="DriverId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="SignatureByEmployee" ColumnName="SignatureByEmployee" />
+          <ScalarProperty Name="SignatureByCustomer" ColumnName="SignatureByCustomer" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ParcelsHistory">
+      <EntityTypeMapping TypeName="PostModel.ParcelsHistory">
+        <MappingFragment StoreEntitySet="ParcelsHistory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParcelId" ColumnName="ParcelId" />
+          <ScalarProperty Name="Received" ColumnName="Received" />
+          <ScalarProperty Name="GiveAway" ColumnName="GiveAway" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="PostModel.People">
+        <MappingFragment StoreEntitySet="People">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostOffices">
+      <EntityTypeMapping TypeName="PostModel.PostOffices">
+        <MappingFragment StoreEntitySet="PostOffices">
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Types">
+      <EntityTypeMapping TypeName="PostModel.Types">
+        <MappingFragment StoreEntitySet="Types">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="PostWorker" TypeName="PostModel.PostWorker" StoreEntitySet="PostWorker">
+      <EndProperty Name="Employees">
+        <ScalarProperty Name="Id" ColumnName="EmployeeId" />
+      </EndProperty>
+      <EndProperty Name="PostOffices">
+        <ScalarProperty Name="Number" ColumnName="PostId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

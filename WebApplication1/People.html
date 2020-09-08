@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <title>Список працівників</title>
+    <style>
+        html, body {
+            display: block;
+            padding: 5px 10px 5px 10px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Список користувачів</h2>
+    <form name="userForm">
+        <input type="hidden" name="id" value="0" />
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input class="form-control" name="firstName" />
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input class="form-control" name="lastName" />
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input class="form-control" name="age" />
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input class="form-control" name="phoneNumber" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input class="form-control" name="email" />
+        </div>
+        <div class="panel-body">
+            <button type="submit" class="btn btn-sm btn-primary">Save</button>
+            <a id="reset" class="btn btn-sm btn-primary">Reset</a>
+        </div>
+    </form>
+    <table class="table table-condensed table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        function GetPeople() {
+            $.ajax({
+                url: 'api/people/',
+                type: 'GET',
+                contentType: "application/json",
+                success: function (people) {
+                    let rows = "";
+                    $.each(people, function (index, person) {
+                        rows += row(person);
+                    })
+                    $("table tbody").append(rows);
+                }
+            });
+        }
+
+        function GetPerson(id) {
+            $.ajax({
+                url: 'api/people/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                success: function (person) {
+                    let form = document.forms["userForm"];
+                    form.elements["id"].value = person.Id;
+                    form.elements["firstName"].value = person.FirstName;
+                    form.elements["lastName"].value = person.LastName;
+                    form.elements["age"].value = person.Age;
+                    form.elements["phoneNumber"].value = person.PhoneNumber;
+                    form.elements["email"].value = person.Email;
+                }
+            });
+        }
+
+        function CreatePerson(person) {
+            $.ajax({
+                url: 'api/people',
+                method: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    FirstName: person.FirstName,
+                    LastName: person.LastName,
+                    Age: person.Age,
+                    PhoneNumber: person.PhoneNumber,
+                    Email: person.Email
+                }),
+                success: function (person) {
+                    reset();
+                    $("table tbody").append(row(person));
+                }
+            });
+        }
+
+        function EditPerson(person) {
+            $.ajax({
+                url: 'api/people/' + person.Id,
+                method: 'PUT',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    Id: person.Id,
+                    FirstName: person.FirstName,
+                    LastName: person.LastName,
+                    Age: person.Age,
+                    PhoneNumber: person.PhoneNumber,
+                    Email: person.Email
+                }),
+                success: function (person) {
+                    reset();
+                    $("tr[data-rowid='" + person.Id + "']").replaceWith(row(person));
+                }
+            });
+        }
+
+        function DeletePerson(id) {
+            $.ajax({
+                url: 'api/people/' + id,
+                contentType: "application/json",
+                method: "DELETE",
+                success: function (person) {
+                    $("tr[data-rowid='" + person.Id + "']").remove();
+                }
+            });
+        }
+
+        function reset() {
+            let form = document.forms["userForm"];
+            form.reset();
+            form.elements["id"].value = 0;
+        }
+
+        let row = function (person) {
+            return "<tr data-rowid='" + person.Id + "'><td>" + person.Id + "</td>" +
+                "<td>" + person.FirstName + "</td> <td>" + person.LastName + "</td>" +
+                "<td>" + person.Age + "</td> <td>" + person.PhoneNumber + "</td>" + "<td>" + person.Email + "</td>" +
+                "<td><a class='editLink' data-id='" + person.Id + "'>Edit</a> | " +
+                "<a class='removeLink' data-id='" + person.Id + "'>Delete</a></td></tr>";
+        }
+
+        $('#reset').click(function (e) {
+            e.preventDefault();
+            reset();
+        });
+
+        $("form").submit(function (e) {
+            e.preventDefault();
+            let person = {
+                Id: this.elements["id"].value,
+                FirstName: this.elements["firstName"].value,
+                LastName: this.elements["lastName"].value,
+                Age: this.elements["age"].value,
+                PhoneNumber: this.elements["phoneNumber"].value,
+                Email: this.elements["email"].value
+            };
+
+            if (person.Id == 0) {
+                CreatePerson(person);
+            }
+            else {
+                EditPerson(person);
+            }
+        });
+
+        $("body").on("click", ".editLink", function () {
+            let id = $(this).data("id");
+            GetPerson(id);
+        });
+        
+        $("body").on("click", ".removeLink", function () {
+            let id = $(this).data("id");
+            DeletePerson(id);
+        });
+
+        GetPeople();
+    </script>
+</body>
+</html>

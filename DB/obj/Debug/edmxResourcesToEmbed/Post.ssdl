@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PostModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Addresses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Country" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Oblast" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Region" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="House" Type="int" Nullable="false" />
+    <Property Name="Flat" Type="int" />
+    <Property Name="Street" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cars">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Brand" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Number" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Year" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AddressId" Type="bigint" Nullable="false" />
+    <Property Name="PersonId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeliveryStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Drivers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeId" Type="bigint" Nullable="false" />
+    <Property Name="CarId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Position" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="PersonId" Type="bigint" Nullable="false" />
+    <Property Name="Salary" Type="money" Nullable="false" />
+    <Property Name="DateWork" Type="datetime" />
+    <Property Name="isFired" Type="bit" />
+  </EntityType>
+  <EntityType Name="Parcels">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SentFromPostOfficeId" Type="int" Nullable="false" />
+    <Property Name="SentToPostOfficeId" Type="int" Nullable="false" />
+    <Property Name="SentFromPersonId" Type="bigint" Nullable="false" />
+    <Property Name="SentToPersonId" Type="bigint" Nullable="false" />
+    <Property Name="DriverId" Type="bigint" Nullable="false" />
+    <Property Name="EmployeeId" Type="bigint" Nullable="false" />
+    <Property Name="TypeId" Type="bigint" Nullable="false" />
+    <Property Name="Weight" Type="int" />
+    <Property Name="Price" Type="money" />
+    <Property Name="SignatureByEmployee" Type="bit" />
+    <Property Name="SignatureByCustomer" Type="bit" />
+    <Property Name="StatusId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ParcelsHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParcelId" Type="bigint" Nullable="false" />
+    <Property Name="Received" Type="datetime" Nullable="false" />
+    <Property Name="GiveAway" Type="datetime" />
+  </EntityType>
+  <EntityType Name="People">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="Email" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="PostOffices">
+    <Key>
+      <PropertyRef Name="Number" />
+    </Key>
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="AddressId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostWorker">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="PostId" />
+    </Key>
+    <Property Name="EmployeeId" Type="bigint" Nullable="false" />
+    <Property Name="PostId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Types">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK__Customers__Addre__4CA06362">
+    <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Addresses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Perso__4D94879B">
+    <End Role="People" Type="Self.People" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="People">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Drivers__CarId__49C3F6B7">
+    <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+    <End Role="Drivers" Type="Self.Drivers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cars">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Drivers">
+        <PropertyRef Name="CarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Drivers__Employe__48CFD27E">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="Drivers" Type="Self.Drivers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Drivers">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employees__Perso__4222D4EF">
+    <End Role="People" Type="Self.People" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="People">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parcels__DriverI__59063A47">
+    <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drivers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parcels">
+        <PropertyRef Name="DriverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parcels__Employe__59FA5E80">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parcels">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parcels__SentFro__5535A963">
+    <End Role="PostOffices" Type="Self.PostOffices" Multiplicity="1" />
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PostOffices">
+        <PropertyRef Name="Number" />
+      </Principal>
+      <Dependent Role="Parcels">
+        <PropertyRef Name="SentFromPostOfficeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parcels__SentFro__571DF1D5">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parcels">
+        <PropertyRef Name="SentFromPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parcels__SentToP__5629CD9C">
+    <End Role="PostOffices" Type="Self.PostOffices" Multiplicity="1" />
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PostOffices">
+        <PropertyRef Name="Number" />
+      </Principal>
+      <Dependent Role="Parcels">
+        <PropertyRef Name="SentToPostOfficeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parcels__SentToP__5812160E">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parcels">
+        <PropertyRef Name="SentToPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parcels__StatusI__71D1E811">
+    <End Role="DeliveryStatus" Type="Self.DeliveryStatus" Multiplicity="1" />
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parcels">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parcels__TypeId__5AEE82B9">
+    <End Role="Types" Type="Self.Types" Multiplicity="1" />
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Types">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parcels">
+        <PropertyRef Name="TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PostOffic__Addre__5070F446">
+    <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+    <End Role="PostOffices" Type="Self.PostOffices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Addresses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostOffices">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PostWorke__Emplo__6E01572D">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="PostWorker" Type="Self.PostWorker" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostWorker">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PostWorke__PostI__6EF57B66">
+    <End Role="PostOffices" Type="Self.PostOffices" Multiplicity="1" />
+    <End Role="PostWorker" Type="Self.PostWorker" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PostOffices">
+        <PropertyRef Name="Number" />
+      </Principal>
+      <Dependent Role="PostWorker">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parcel_Id">
+    <End Role="Parcels" Type="Self.Parcels" Multiplicity="1" />
+    <End Role="ParcelsHistory" Type="Self.ParcelsHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parcels">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ParcelsHistory">
+        <PropertyRef Name="ParcelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PostModelStoreContainer">
+    <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeliveryStatus" EntityType="Self.DeliveryStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parcels" EntityType="Self.Parcels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ParcelsHistory" EntityType="Self.ParcelsHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostOffices" EntityType="Self.PostOffices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostWorker" EntityType="Self.PostWorker" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Types" EntityType="Self.Types" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Customers__Addre__4CA06362" Association="Self.FK__Customers__Addre__4CA06362">
+      <End Role="Addresses" EntitySet="Addresses" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Perso__4D94879B" Association="Self.FK__Customers__Perso__4D94879B">
+      <End Role="People" EntitySet="People" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Drivers__CarId__49C3F6B7" Association="Self.FK__Drivers__CarId__49C3F6B7">
+      <End Role="Cars" EntitySet="Cars" />
+      <End Role="Drivers" EntitySet="Drivers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Drivers__Employe__48CFD27E" Association="Self.FK__Drivers__Employe__48CFD27E">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Drivers" EntitySet="Drivers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employees__Perso__4222D4EF" Association="Self.FK__Employees__Perso__4222D4EF">
+      <End Role="People" EntitySet="People" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parcels__DriverI__59063A47" Association="Self.FK__Parcels__DriverI__59063A47">
+      <End Role="Drivers" EntitySet="Drivers" />
+      <End Role="Parcels" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parcels__Employe__59FA5E80" Association="Self.FK__Parcels__Employe__59FA5E80">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Parcels" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parcels__SentFro__5535A963" Association="Self.FK__Parcels__SentFro__5535A963">
+      <End Role="PostOffices" EntitySet="PostOffices" />
+      <End Role="Parcels" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parcels__SentFro__571DF1D5" Association="Self.FK__Parcels__SentFro__571DF1D5">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Parcels" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parcels__SentToP__5629CD9C" Association="Self.FK__Parcels__SentToP__5629CD9C">
+      <End Role="PostOffices" EntitySet="PostOffices" />
+      <End Role="Parcels" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parcels__SentToP__5812160E" Association="Self.FK__Parcels__SentToP__5812160E">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Parcels" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parcels__StatusI__71D1E811" Association="Self.FK__Parcels__StatusI__71D1E811">
+      <End Role="DeliveryStatus" EntitySet="DeliveryStatus" />
+      <End Role="Parcels" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parcels__TypeId__5AEE82B9" Association="Self.FK__Parcels__TypeId__5AEE82B9">
+      <End Role="Types" EntitySet="Types" />
+      <End Role="Parcels" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PostOffic__Addre__5070F446" Association="Self.FK__PostOffic__Addre__5070F446">
+      <End Role="Addresses" EntitySet="Addresses" />
+      <End Role="PostOffices" EntitySet="PostOffices" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PostWorke__Emplo__6E01572D" Association="Self.FK__PostWorke__Emplo__6E01572D">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="PostWorker" EntitySet="PostWorker" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PostWorke__PostI__6EF57B66" Association="Self.FK__PostWorke__PostI__6EF57B66">
+      <End Role="PostOffices" EntitySet="PostOffices" />
+      <End Role="PostWorker" EntitySet="PostWorker" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parcel_Id" Association="Self.FK_Parcel_Id">
+      <End Role="Parcels" EntitySet="Parcels" />
+      <End Role="ParcelsHistory" EntitySet="ParcelsHistory" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
